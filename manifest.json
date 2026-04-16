@@ -1,0 +1,21 @@
+{
+  "name": "Panadería El Buen Trigo",
+  "short_name": "Buen Trigo",
+  "description": "Pedí online lo mejor en panadería y pastelería.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FDF9F1",
+  "theme_color": "#D48C29",
+  "icons": [
+    {
+      "src": "icono-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
