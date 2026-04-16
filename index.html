@@ -575,7 +575,6 @@
         .controles-filtros { display: flex; flex-direction: column; gap: 10px; width: 100%; }
         .select-categoria, .buscador-input { height: 45px; width: 100% !important; min-width: 0 !important; font-size: 0.9rem; }
 
-        /* FORZAR 2 COLUMNAS EN MÓVIL */
         .grid-productos { 
             grid-template-columns: repeat(2, 1fr); 
             gap: 10px; 
@@ -685,6 +684,17 @@
     </div>
 </div>
 
+<div id="modal-confirmacion" class="modal-overlay">
+    <div class="modal-content" style="max-width: 350px; text-align: center; padding: 30px;">
+        <h3 style="color: var(--coffee); font-family: var(--font-title); margin-top: 0;">¿Vaciar pedido?</h3>
+        <p style="color: var(--texto-secundario); margin-bottom: 25px;">Se eliminarán todos los productos de tu carrito.</p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button id="btn-cancelar-vaciar" class="btn-agregar" style="background: var(--bg-body); color: var(--coffee); border: 1px solid var(--borde-color); font-size: 0.9rem;">Cancelar</button>
+            <button id="btn-confirmar-vaciar" class="btn-agregar" style="background: var(--rojo-cerrado); color: white; border: none; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(229, 57, 53, 0.3);">Sí, vaciar</button>
+        </div>
+    </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -746,6 +756,11 @@ const btnCompartir = document.getElementById('btn-compartir');
 const elBanner = document.getElementById('banner-anuncios');
 const elTextoBanner = document.getElementById('texto-banner');
 const btnCerrarBanner = document.getElementById('btn-cerrar-banner');
+
+// Nuevos elementos para el modal de confirmación
+const modalConfirmacion = document.getElementById('modal-confirmacion');
+const btnConfirmarVaciar = document.getElementById('btn-confirmar-vaciar');
+const btnCancelarVaciar = document.getElementById('btn-cancelar-vaciar');
 
 // Helpers
 const formatPrice = (p) => `$${Number(p).toLocaleString('es-AR', {minimumFractionDigits: 2})}`;
@@ -1125,20 +1140,30 @@ function actualizarCarritoUI() {
     });
 }
 
-btnVaciar.addEventListener('click', ()=> { 
-    if(confirm('¿Vaciar pedido?')) { 
-        carrito=[]; 
-        actualizarCarritoUI(); 
-        actualizarBotonesProductos();
-        localStorage.removeItem(STORAGE_KEY); 
-    } 
-});
-
 // Modales y WhatsApp
 btnVerCarrito.addEventListener('click', ()=> modal.classList.add('visible'));
 document.getElementById('btn-cerrar-modal').addEventListener('click', ()=> modal.classList.remove('visible'));
 document.getElementById('btn-abrir-horarios').addEventListener('click', ()=> modalHorarios.classList.add('visible'));
 document.getElementById('btn-cerrar-horarios').addEventListener('click', ()=> modalHorarios.classList.remove('visible'));
+
+// Lógica de VACIAR CARRITO con Modal Personalizado
+btnVaciar.addEventListener('click', ()=> { 
+    modalConfirmacion.classList.add('visible');
+});
+
+btnCancelarVaciar.addEventListener('click', () => {
+    modalConfirmacion.classList.remove('visible');
+});
+
+btnConfirmarVaciar.addEventListener('click', () => {
+    carrito = []; 
+    actualizarCarritoUI(); 
+    actualizarBotonesProductos();
+    localStorage.removeItem(STORAGE_KEY); 
+    modalConfirmacion.classList.remove('visible');
+    showToast("🛒 Carrito vaciado");
+});
+
 
 btnEnviarPedido.addEventListener('click', (e) => {
     e.preventDefault();
