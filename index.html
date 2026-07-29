@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Panadería El Buen Trigo - Pedidos Online</title>
+    <title>Pedidos Online - Catalogo Digital</title>
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0284C7">
@@ -79,6 +79,9 @@
         background-size: 35px 35px;
         color: var(--texto-principal); line-height: 1.7; overflow-x: hidden;
         transition: background-color var(--transition-speed), color var(--transition-speed);
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
     
     body::before {
@@ -159,7 +162,7 @@
     .btn-carrito span { font-weight: 800; background: rgba(0, 0, 0, 0.2); padding: 2px 10px; border-radius: 20px; font-size: 0.95rem; }
 
     /* --- Layout Principal --- */
-    .tienda-container { display: flex; gap: 35px; margin: 40px auto; max-width: 1200px; padding: 0 25px; align-items: flex-start; position: relative; z-index: 1;}
+    .tienda-container { display: flex; gap: 35px; margin: 40px auto; max-width: 1200px; padding: 0 25px; align-items: flex-start; position: relative; z-index: 1; flex: 1; width: 100%; }
     .categorias-sidebar { flex: 0 0 240px; background: var(--bg-card); padding: 30px 25px; border-radius: 24px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); position: sticky; top: 120px; transition: all var(--transition-speed);}
     .categorias-sidebar h2 { margin-top: 0; color: var(--text-dark); font-family: var(--font-title); font-weight: 800; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; font-size: 1.5rem; letter-spacing: -0.5px;}
     .categorias-sidebar ul { list-style: none; padding: 0; margin: 0;}
@@ -193,7 +196,7 @@
     .producto-card .precio { font-weight: 800; color: var(--primary-color); font-size: 1.6rem; margin-bottom: 20px; display: block; letter-spacing: -0.5px;}
     
     .producto-card .btn-agregar { background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); padding: 12px 15px; border-radius: 12px; cursor: pointer; font-weight: 600; font-family: var(--font-text); width: 100%; height: 45px; transition: all 0.3s; font-size: 0.95rem; }
-    .producto-card .btn-agregar:disabled { background: var(--bg-light); border-color: var(--border-color); color: var(--text-gray); cursor: not-allowed; }
+    .producto-card .btn-agregar:disabled { background: var(--bg-light); border-color: var(--border-color); color: var(--text-gray); cursor: not-allowed; opacity: 0.6; }
     .producto-card .btn-agregar:hover:not(:disabled) { background: var(--primary-color); color: #fff; box-shadow: 0 10px 15px -5px rgba(2, 132, 199, 0.3); }
 
     /* --- Modales --- */
@@ -205,10 +208,34 @@
     .modal-close:hover { color: var(--rojo-cerrado); }
     .modal-content h2 { font-family: var(--font-title); font-weight: 800; color: var(--text-dark); margin-top: 0; font-size: 2rem; letter-spacing: -0.5px;}
 
+    /* 📌 FIX DE HORARIOS: Flexbox alineado para evitar superposiciones */
     .lista-horarios { list-style: none; padding: 0; margin: 15px 0 0 0; display: flex; flex-direction: column; gap: 10px;}
-    .lista-horarios li { display: grid; grid-template-columns: 120px 1fr; align-items: center; padding: 15px; border-radius: 12px; background-color: var(--bg-light); border: 1px solid var(--border-color); }
-    .horario-dia { font-weight: 600; color: var(--text-dark); text-transform: capitalize; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; }
-    .horario-hora { font-size: 1rem; color: var(--text-gray); line-height: 1.4; }
+    .lista-horarios li { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 12px 18px; 
+        border-radius: 12px; 
+        background-color: var(--bg-light); 
+        border: 1px solid var(--border-color); 
+        gap: 15px;
+    }
+    .horario-dia { 
+        font-weight: 600; 
+        color: var(--text-dark); 
+        text-transform: capitalize; 
+        font-size: 1rem; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+        flex-shrink: 0; 
+    }
+    .horario-hora { 
+        font-size: 0.95rem; 
+        color: var(--text-gray); 
+        line-height: 1.4; 
+        text-align: right; 
+    }
     .lista-horarios li.dia-actual { background-color: var(--white); border-color: var(--primary-color); box-shadow: var(--shadow-sm); }
     .lista-horarios li.dia-actual .horario-dia { color: var(--primary-color); font-weight: 800;}
     .badge-hoy { font-size: 0.7rem; background: var(--primary-color); color: #FFF; padding: 3px 8px; border-radius: 6px; font-weight: 800; letter-spacing: 0.5px; }
@@ -224,6 +251,7 @@
     #form-cliente input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--primary-light); outline: none; }
     .btn-whatsapp { background: var(--wa-green); color: white; padding: 16px; width: 100%; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); transition: 0.3s;}
     .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); }
+    .btn-whatsapp:disabled { background: #94A3B8; cursor: not-allowed; box-shadow: none; transform: none; }
     
     .btn-vaciar { 
         display: inline-flex; align-items: center; gap: 6px; 
@@ -258,6 +286,41 @@
     .banner-inst-actions { display: flex; align-items: center; gap: 8px; }
     .btn-inst-aceptar { background: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;}
     .btn-inst-cancelar { background: transparent; color: var(--text-gray); border: none; font-size: 1.2rem; cursor: pointer; padding: 5px;}
+
+    /* 📌 OCULTAR BANNER DE INSTALACIÓN EN PC */
+    @media (min-width: 769px) {
+        .banner-instalacion {
+            display: none !important;
+        }
+    }
+
+    /* 📌 FOOTER ESTILO SIERRASWEB */
+    footer {
+        padding: 40px 20px;
+        text-align: center;
+        color: var(--text-gray);
+        background-color: var(--bg-card);
+        border-top: 1px solid var(--border-color);
+        margin-top: 50px;
+        transition: background-color var(--transition-speed);
+    }
+    .footer-logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--text-dark);
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+        transition: transform 0.3s;
+    }
+    .footer-logo:hover { transform: scale(1.05); }
+    .footer-logo span { color: var(--primary-color); }
+    .footer-text {
+        font-size: 0.85rem;
+        color: var(--text-gray);
+        margin: 0;
+    }
 
     /* --- RESPONSIVE MÓVILES --- */
     @media (max-width: 768px) {
@@ -297,8 +360,8 @@
 
 <header>
     <div class="marca-container">
-        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=200&auto=format&fit=crop" alt="Logo Panadería" class="logo-negocio">
-        <h1>Panadería <span>El Buen Trigo</span></h1>
+        <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?q=80&w=200&auto=format&fit=crop" alt="Logo Comercio" class="logo-negocio">
+        <h1>Mi <span>Comercio</span></h1>
     </div>
     
     <div class="header-controles">
@@ -312,7 +375,7 @@
 <div class="tienda-container">
 
     <nav class="categorias-sidebar">
-        <h2>Mostradores</h2>
+        <h2>Categorías</h2>
         <ul id="categorias-lista">
             <!-- Categorías dinámicas -->
         </ul>
@@ -342,12 +405,21 @@
     <button id="btn-toggle-tema" class="btn-flotante" title="Cambiar Tema (Día/Noche)">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </button>
-    <button id="btn-compartir" class="btn-flotante" title="Compartir Negocio">🔗</button>
+    <!-- 📌 BOTÓN DE COMPARTIR MODERNO CON SVG -->
+    <button id="btn-compartir" class="btn-flotante" title="Compartir Negocio">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+    </button>
 </div>
 
 <div id="banner-instalacion" class="banner-instalacion">
     <div class="banner-inst-content">
-        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=200&auto=format&fit=crop" alt="App Logo" class="banner-inst-icon">
+        <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?q=80&w=200&auto=format&fit=crop" alt="App Logo" class="banner-inst-icon">
         <div class="banner-inst-text">
             <strong>¡Instalá la App!</strong>
             <span>Pedí más rápido y fácil.</span>
@@ -414,11 +486,17 @@
 
 <div id="toast"></div>
 
+<!-- 📌 FOOTER CON LOGO DE SIERRASWEB QUE REDIRIGE A SU WEB -->
+<footer>
+    <a href="https://sierrasweb.com.ar" target="_blank" rel="noopener noreferrer" class="footer-logo">Sierras<span>Web</span></a>
+    <p class="footer-text">Desarrollo y Soluciones Web Profesionales</p>
+</footer>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 📢 CONFIGURACIÓN ---
-    const TEXTO_BANNER = "📢 ¡Facturas calientes todos los días a las 6AM y 16PM! | 💳 Aceptamos Mercado Pago";
+    const TEXTO_BANNER = "📢 ¡Hacé tu pedido online de forma rápida y sencilla! | 💳 Aceptamos Mercado Pago";
 
     const params = new URLSearchParams(window.location.search);
     const negocioActual = params.get('negocio') || 'verduleria_elfresquito1';
@@ -528,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- COMPARTIR ---
     btnCompartir.addEventListener('click', async () => {
-        const shareData = { title: 'Panadería El Buen Trigo', text: '¡Mirá lo rico que hay en El Buen Trigo! Pedí online:', url: window.location.href };
+        const shareData = { title: 'Tienda Online', text: '¡Mirá nuestros productos! Pedí online aquí:', url: window.location.href };
         if (navigator.share) { 
             try { await navigator.share(shareData); } catch (err) { console.log('Error al compartir:', err); } 
         } else { 
@@ -645,6 +723,11 @@ document.addEventListener('DOMContentLoaded', () => {
             indicadorEstado.classList.add("cerrado");
             negocioAbierto = false;
         }
+
+        // Re-renderizamos para actualizar el estado del botón si los productos ya están cargados
+        if (productos.length > 0) {
+            filtrarYRenderizarProductos();
+        }
     }
 
     // --- CARGA DE PRODUCTOS ---
@@ -749,8 +832,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lista.forEach(p => {
             const itemEnCarrito = carrito.find(item => item.id === p.id);
             const cantidadActual = itemEnCarrito ? itemEnCarrito.cantidad : 0;
-
-            // FIX DE IMÁGENES: Comprueba múltiples nombres posibles que pueda devolver tu Google Sheet
             const urlImagen = p.imagen || p.img || p.foto || p.image || '';
 
             const card = document.createElement('div');
@@ -763,12 +844,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let imgHTML = '';
             if (urlImagen) {
-                // Quitamos el loading="lazy" por seguridad en el renderizado dinámico y añadimos la url extraída
                 imgHTML = `<img src="${urlImagen}" alt="${p.nombre}">`;
             }
 
+            // 📌 BLOQUEO DE BOTONES SI EL LOCAL ESTÁ CERRADO
             let controlBotonHTML = '';
-            if (cantidadActual > 0) {
+            if (!negocioAbierto) {
+                controlBotonHTML = `
+                    <button class="btn-agregar" disabled style="opacity:0.6; cursor:not-allowed;">CERRADO</button>
+                `;
+            } else if (cantidadActual > 0) {
                 controlBotonHTML = `
                     <div class="controles-cantidad-card">
                         <button class="btn-cantidad-card btn-restar-card" data-id="${p.id}">-</button>
@@ -790,9 +875,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${controlBotonHTML}
             `;
 
-            // Escuchadores de eventos para los botones
             const btnAgregar = card.querySelector('.btn-agregar');
-            if (btnAgregar) {
+            if (btnAgregar && negocioAbierto) {
                 btnAgregar.addEventListener('click', (e) => {
                     e.stopPropagation();
                     agregarAlCarrito(p);
@@ -800,7 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const btnSumar = card.querySelector('.btn-sumar-card');
-            if (btnSumar) {
+            if (btnSumar && negocioAbierto) {
                 btnSumar.addEventListener('click', (e) => {
                     e.stopPropagation();
                     modificarCantidad(p.id, 1);
@@ -808,7 +892,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const btnRestar = card.querySelector('.btn-restar-card');
-            if (btnRestar) {
+            if (btnRestar && negocioAbierto) {
                 btnRestar.addEventListener('click', (e) => {
                     e.stopPropagation();
                     modificarCantidad(p.id, -1);
@@ -840,7 +924,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function agregarAlCarrito(prod) {
-        // FIX DE IMÁGENES AL AÑADIR AL CARRITO
+        // 📌 VALIDACIÓN: Impedir comprar si está cerrado
+        if (!negocioAbierto) {
+            showToast("⚠️ El local está cerrado actualmente.");
+            return;
+        }
+
         const urlImagen = prod.imagen || prod.img || prod.foto || prod.image || '';
         const existe = carrito.find(item => item.id === prod.id);
         if (existe) {
@@ -864,6 +953,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function modificarCantidad(id, cambio) {
+        // 📌 VALIDACIÓN: Impedir aumentar cantidad si está cerrado
+        if (!negocioAbierto && cambio > 0) {
+            showToast("⚠️ El local está cerrado actualmente.");
+            return;
+        }
+
         const item = carrito.find(i => i.id === id);
         if (!item) return;
 
@@ -948,6 +1043,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnEnviarPedido.addEventListener('click', async (e) => {
         e.preventDefault();
 
+        // 📌 VALIDACIÓN: Impedir enviar pedido si está cerrado
+        if (!negocioAbierto) {
+            alert("El negocio se encuentra cerrado en este momento. No es posible realizar pedidos.");
+            return;
+        }
+
         if (carrito.length === 0) {
             alert("Tu carrito está vacío. Agregá productos antes de enviar.");
             return;
@@ -964,7 +1065,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        let mensaje = `🥖 *NUEVO PEDIDO - Panadería El Buen Trigo*\n\n`;
+        // 📌 TEXTO GENERÁLIZADO (NO SOLO PANADERÍA)
+        let mensaje = `🛒 *NUEVO PEDIDO*\n\n`;
         mensaje += `👤 *Cliente:* ${nombre}\n`;
         mensaje += `📱 *Teléfono:* ${celular}\n\n`;
         mensaje += `📝 *Detalle del Pedido:*\n`;
@@ -979,7 +1081,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje += `\n💰 *TOTAL:* ${formatPrice(total)}\n\n`;
         mensaje += `¡Muchas gracias!`;
 
-        // Registrar pedido en Google Sheets (asíncrono)
         try {
             const formData = new FormData();
             formData.append('negocio', negocioActual);
@@ -995,7 +1096,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }).catch(err => console.log('Error al registrar en sheet:', err));
         } catch(e) {}
 
-        // Redirigir a WhatsApp
         const urlWa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
         window.open(urlWa, '_blank');
 
@@ -1004,11 +1104,14 @@ document.addEventListener('DOMContentLoaded', () => {
         formCliente.reset();
     });
 
-    // --- PWA INSTALACIÓN ---
+    // --- PWA INSTALACIÓN (SOLO CELULARES) ---
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        if(bannerInstalacion) {
+        
+        // 📌 Mostrar únicamente en dispositivos móviles por JS
+        const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+        if(bannerInstalacion && isMobile) {
             setTimeout(() => bannerInstalacion.classList.add('show'), 2000);
         }
     });
