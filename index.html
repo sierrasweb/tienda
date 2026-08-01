@@ -7,7 +7,7 @@
 
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0284C7">
-    <link rel="apple-touch-icon" href="icono-192.png">
+    <link rel="apple-touch-icon" href="icono-192.png">l
 
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
@@ -1083,11 +1083,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Armamos el objeto con los nombres EXACTOS que espera tu Apps Script original
+            // Recorremos el carrito y armamos el texto "5x Producto A | 2x Producto B"
+            const detalleLegible = carrito.map(item => `${item.cantidad}x ${item.nombre}`).join(' | ');
+
             const datosParaScript = {
                 nombre_cliente: nombre,
                 celular_cliente: celular,
                 total: total,
-                detalle_compra: JSON.stringify(carrito) 
+                detalle_compra: detalleLegible 
             };
 
             fetch(URL_SHEET_REGISTRO, {
