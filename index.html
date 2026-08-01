@@ -1082,19 +1082,26 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje += `¡Muchas gracias!`;
 
         try {
-            const formData = new FormData();
-            formData.append('negocio', negocioActual);
-            formData.append('nombre', nombre);
-            formData.append('celular', celular);
-            formData.append('total', total);
-            formData.append('pedido', JSON.stringify(carrito));
+            // Armamos el objeto con los nombres EXACTOS que espera tu Apps Script original
+            const datosParaScript = {
+                nombre_cliente: nombre,
+                celular_cliente: celular,
+                total: total,
+                detalle_compra: JSON.stringify(carrito) 
+            };
 
             fetch(URL_SHEET_REGISTRO, {
                 method: 'POST',
-                body: formData,
-                mode: 'no-cors'
+                body: JSON.stringify(datosParaScript),
+                // Lo enviamos como texto plano para evitar el bloqueo de CORS (preflight options) en el navegador.
+                // Apps Script va a recibir este texto en e.postData.contents y lo va a parsear perfecto.
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                }
             }).catch(err => console.log('Error al registrar en sheet:', err));
-        } catch(e) {}
+        } catch(e) {
+            console.error('Error en el bloque de envío:', e);
+        }
 
         const urlWa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
         window.open(urlWa, '_blank');
